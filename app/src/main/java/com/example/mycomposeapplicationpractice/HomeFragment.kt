@@ -43,9 +43,9 @@ class HomeFragment : Fragment() {
 fun Home(temperature: String, homeFragment: ComposeView) {
 
     fun onDetailClick() {
-//        navController
         homeFragment.findNavController().navigate(R.id.detailFragment)
     }
+
     Column(
         Modifier
             .fillMaxWidth()
