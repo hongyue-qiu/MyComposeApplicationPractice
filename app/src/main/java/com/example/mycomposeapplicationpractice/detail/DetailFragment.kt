@@ -16,6 +16,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycomposeapplicationpractice.component.DetailRow
 import com.example.mycomposeapplicationpractice.ui.theme.MyComposeApplicationPracticeTheme
@@ -24,9 +26,11 @@ class DetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // TODO request weather data
-        Log.v("get1", "1111")
-        val model:DetailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        model.getWeathers()
+        val model:DetailViewModel by viewModels()
+        val test = model.getWeathers().observe(this, Observer<List<Weather>> { weathers ->
+            Log.v("weathers",weathers.toString())
+        })
+        Log.v("get11111", test.toString())
     }
 
     override fun onCreateView(

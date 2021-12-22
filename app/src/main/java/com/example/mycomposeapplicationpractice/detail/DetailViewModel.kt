@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 
 class DetailViewModel : ViewModel() {
@@ -24,9 +26,15 @@ class DetailViewModel : ViewModel() {
         val request:Request = Request.Builder()
             .url("https://api.gugudata.com/weather/weatherinfo/demo")
             .build()
-        val response = client.newCall(request).execute()
-        Log.v("get1", "1111")
-        Log.v("get", response.toString())
+
+
+        val response = client.newCall(request).enqueue(object:Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.v("detailViewModel", "error: $e")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.v("detailViewModel", "success: ${response.body?.string()}")
 
     }
 }
