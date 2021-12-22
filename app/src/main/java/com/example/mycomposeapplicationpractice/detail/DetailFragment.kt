@@ -27,10 +27,17 @@ class DetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // TODO request weather data
         val model:DetailViewModel by viewModels()
-        val test = model.getWeathers().observe(this, Observer<List<Weather>> { weathers ->
+        model.getWeathers()
+        val test = model.weather.observe(this){ weathers ->
             Log.v("weathers",weathers.toString())
-        })
+        }
+
+        val test2 = model.test.observe(this){ test ->
+            Log.v("weathers",test.toString())
+        }
+
         Log.v("get11111", test.toString())
+        Log.v("get11111", test2.toString())
     }
 
     override fun onCreateView(
