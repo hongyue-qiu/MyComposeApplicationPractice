@@ -21,12 +21,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycomposeapplicationpractice.component.DetailRow
 import com.example.mycomposeapplicationpractice.ui.theme.MyComposeApplicationPracticeTheme
+import org.koin.androidx.compose.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO request weather data
-        val model:DetailViewModel by viewModels()
+        // TODO request weather data --sharedView modal
+        val model:DetailViewModel by viewModel()
+//        val model:DetailViewModel by viewModels()
         model.getWeathers()
         val test = model.weather.observe(this){ weathers ->
             Log.v("weathers",weathers.toString())
