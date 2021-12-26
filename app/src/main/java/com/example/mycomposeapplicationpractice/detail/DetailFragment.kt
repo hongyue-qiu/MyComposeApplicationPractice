@@ -16,13 +16,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.mycomposeapplicationpractice.component.DetailRow
 import com.example.mycomposeapplicationpractice.ui.theme.MyComposeApplicationPracticeTheme
-import org.koin.androidx.compose.viewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment() {
@@ -30,18 +25,12 @@ class DetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // TODO request weather data --sharedView modal
         val model:DetailViewModel by viewModel()
-//        val model:DetailViewModel by viewModels()
-        model.getWeathers()
-        val test = model.weather.observe(this){ weathers ->
-            Log.v("weathers",weathers.toString())
+        model.loadWeathers()
+
+        model.test.observe(this){ test ->
+            Log.v("weatherList",test.toString())
         }
 
-        val test2 = model.test.observe(this){ test ->
-            Log.v("weathers",test.toString())
-        }
-
-        Log.v("get11111", test.toString())
-        Log.v("get11111", test2.toString())
     }
 
     override fun onCreateView(

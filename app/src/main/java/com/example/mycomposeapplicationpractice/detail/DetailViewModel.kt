@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mycomposeapplicationpractice.domain.repository.WeatherState
 import com.example.mycomposeapplicationpractice.domain.use_cases.GetWeatherUseCase
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -23,22 +22,17 @@ class DetailViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewMo
     val test:LiveData<Any>
         get() = _test
 
-    fun getWeathers() {
-        viewModelScope.launch {
-            loadWeathers()
-//            _test.value = temp!!
-            Log.v("detailViewModel", "test: ")
-        }
-    }
-
-    private suspend fun loadWeathers(): Function<Job> = {
+    fun loadWeathers() {
         // TODO: asynchronous operation to get weathers
+        Log.v("detailViewModel", "loadWeathers")
         viewModelScope.launch {
-            getWeatherUseCase.invoke().collect { data ->
-                when(data) {
+            Log.v("detailViewModel", "loadWeathers")
+            getWeatherUseCase.invoke().collect {
+                when(it) {
                     is WeatherState.Success -> {
 //                        _state.value = LatestNewsUiState.Success("Success")
-                        _test.value = data
+                        _test.value = it.data
+                        Log.v("detailViewModel", "_test.value ${_test}")
                     }
                     is WeatherState.Error -> {
 //                        _state.value = LatestNewsUiState.Error
@@ -49,23 +43,6 @@ class DetailViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewMo
                 }
             }
         }
-//        return withContext(Dispatchers.IO){
-//            val client = OkHttpClient();
-//            val request:Request = Request.Builder()
-//                .url("https://api.gugudata.com/weather/weatherinfo/demo")
-//                .build()
-//
-//            val response = client.newCall(request).execute()
-//            if (response.isSuccessful) {
-//                val jsonObj = JSONObject(response.body?.string());
-//                val jsonData = jsonObj.get("Data")
-//                return@withContext jsonData;
-//            }else {
-//                Log.v("detailViewModel", "error: !!!!")
-//                return@withContext ""
-//            }
-//
-//        }
         }
 
 }
